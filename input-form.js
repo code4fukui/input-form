@@ -42,6 +42,9 @@ class InputForm extends HTMLElement {
       const inp = v.count > 1 ? new InputMulti({ type, maxlength: v.count }) : createInputByType(type);
       this.appendChild(inp);
       inp.value = val;
+      if (v.lock == "1") {
+        inp.disabled = true;
+      }
       inps[name] = inp;
     }
     this.inps = inps;
