@@ -14,39 +14,39 @@ class InputMulti extends HTMLElement {
     this.init();
   }
   async init() {
-    this.innerHTML = "";
-    const type = this.getAttribute("type");
-    const inp = createInputByType(type);
-    this.appendChild(inp);
+    this.inps = create("div", this, "inps");
+    this.appendChild(this.inps);
     const btns = create("div", this);
     const btnp = create("button", btns);
     btnp.textContent = "+";
     const btnm = create("button", btns);
     btnm.textContent = "-";
-    const addInp = () => {
-      const inp = createInputByType(type);
-      this.insertBefore(inp, btns);
-      return inp;
-    };
     btnp.onclick = () => {
-      if (this.children.length <= parseInt(this.getAttribute("maxlength"))) {
-        addInp();
+      if (this.inps.children.length < parseInt(this.getAttribute("maxlength"))) {
+        this._addInp();
       }
     };
     btnm.onclick = () => {
-      if (this.children.length <= 2) {
+      if (this.inps.children.length == 0) {
         return;
       }
-      const inp = this.children[this.children.length - 2];
-      this.removeChild(inp);
+      const inp = this.inps.children[this.inps.children.length - 1];
+      this.inps.removeChild(inp);
     };
-
-    // set data
+    this._setValue();
+  }
+  async _addInp() {
+    const type = this.getAttribute("type");
+    const inp = createInputByType(type);
+    this.inps.appendChild(inp);
+    return inp;
+  }
+  async _setValue() {
+    this.inps.innerHTML = "";
     const data = JSON.parse(this.getAttribute("data"));
     if (data && data.length > 0) {
-      inp.value = data[0];
-      for (let i = 1; i < data.length; i++) {
-        const inp = addInp();
+      for (const d of data) {
+        const inp = this._addInp();
         inp.value = data[i];
       }
     }
@@ -61,20 +61,17 @@ class InputMulti extends HTMLElement {
     return res;
   }
   set value(data) {
-    if (!data) {
-      return;
+    if (data && Array.isArray(data)) {
+      const data2 = [];
+      const len = Math.min(data.length, parseInt(this.getAttribute("maxlength")));
+      for (let i = 0; i < len; i++) {
+        data2.push(data[i]);
+      }
+      this.setAttribute("data", JSON.stringify(data2));
+    } else {
+      this.setAttribute("data", null);
     }
-    if (!Array.isArray(data)) {
-      console.log("data must be an array");
-      return;
-    }
-    const data2 = [];
-    const len = Math.min(data.length, parseInt(this.getAttribute("maxlength")));
-    for (let i = 0; i < len; i++) {
-      data2.push(data[i]);
-    }
-    this.setAttribute("data", JSON.stringify(data2));
-    this.init();
+    this._setValue();
   }
 }
 
