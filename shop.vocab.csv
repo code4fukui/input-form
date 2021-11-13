@@ -1,0 +1,10 @@
+name_ja,mandatory,type,description,url,limit
+名称,O,string,,,100
+名称(カナ),O,string,,,100
+住所,O,string,,,1000
+場所,O,geo3x3,,,100
+営業曜日,O,week,,,7
+営業開始時間,O,time,,,5
+営業終了時間,O,time,,,5
+営業日備考,O,string,,,100
+WebサイトURL,O,url,,,1000

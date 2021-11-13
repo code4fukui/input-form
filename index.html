@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<body>
+
+<script type="module" src="./input-form.js"></script>
+
+<input-form id="iform" vocab="./company.vocab.csv" x-vocab="./shop.vocab.csv"></input-form>
+<button id=btn>登録</button>
+
+<textarea id="res"></textarea>
+
+<script type="module">
+btn.onclick = () => {
+  res.value = JSON.stringify(iform.value); // , 2, null);
+  console.log(JSON.stringify(iform.value, 2, null))
+};
+</script>
+
+<style>
+input-multi > * {
+  display: inline-block;
+  border: 1px solid black;
+  margin: .5em;
+  padding: .5em;
+}
+input-multi > *:last-child {
+  border: none;
+  x-background-color: red;
+}
+</style>

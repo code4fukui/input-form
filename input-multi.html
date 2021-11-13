@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<body>
+
+<script type="module" src="./input-multi.js"></script>
+
+<input-multi id="iform" type="int" maxlength=3></input-multi>
+<button id=btnget>get</button>
+<button id=btnset>set</button>
+
+<textarea id="res"></textarea>
+
+<script type="module">
+btnget.onclick = () => {
+  res.value = JSON.stringify(iform.value); // , 2, null);
+  console.log(JSON.stringify(iform.value, 2, null))
+};
+btnset.onclick = () => {
+  iform.value = JSON.parse(res.value);
+};
+</script>
