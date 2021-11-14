@@ -2,8 +2,9 @@ import { create } from "https://js.sabae.cc/stdcomp.js";
 import { InputLGCode } from "https://code4fukui.github.io/input-lgcode/input-lgcode.js";
 import { InputGeo3x3 } from "https://code4fukui.github.io/input-geo3x3/input-geo3x3.js";
 import { InputForm } from "./input-form.js";
+import { InputImage } from "https://code4fukui.github.io/input-image/input-image.js";
 
-export const createInputByType = (type) => {
+export const createInputByType = (type, opts) => {
   if (type.startsWith("enum[")) {
     const vals = type.substring(5, type.length - 1).split(",");
     const sel = create("select", this);
@@ -31,11 +32,13 @@ export const createInputByType = (type) => {
   } else if (type == "text") {
     return create("textarea", this);
   } else if (type == "lgcode") {
-    return new InputLGCode();
+    return new InputLGCode(opts);
   } else if (type == "industorycode") {
-    return new InputIndustoryCode();
+    return new InputIndustoryCode(opts);
   } else if (type == "geo3x3") {
-    return new InputGeo3x3(34.57346388686853, 135.48292948058597);
+    return new InputGeo3x3(34.57346388686853, 135.48292948058597); // todo ues opts
+  } else if (type == "image") {
+    return new InputImage(opts);
   } else {
     return create("input", this);
   }

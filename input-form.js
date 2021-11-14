@@ -39,7 +39,7 @@ class InputForm extends HTMLElement {
       div.innerHTML = name + mandatory; //.substring(5);
       const type = v.type;
       const val = data ? data[name] || "" : "";
-      const inp = v.count > 1 ? new InputMulti({ type, maxlength: v.count }) : createInputByType(type);
+      const inp = v.count > 1 ? new InputMulti({ type, maxlength: v.count }, v) : createInputByType(type, v);
       this.appendChild(inp);
       inp.value = val;
       if (v.lock == "1") {

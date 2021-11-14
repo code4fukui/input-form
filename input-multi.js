@@ -2,7 +2,7 @@ import { create } from "https://js.sabae.cc/stdcomp.js";
 import { createInputByType } from "./createInputByType.js";
 
 class InputMulti extends HTMLElement {
-  constructor(opts) {
+  constructor(opts, childopts) {
     super();
     if (opts) {
       for (const name in opts) {
@@ -11,6 +11,7 @@ class InputMulti extends HTMLElement {
         }
       }
     }
+    this.childopts = childopts;
     this.init();
   }
   async init() {
@@ -37,7 +38,7 @@ class InputMulti extends HTMLElement {
   }
   async _addInp() {
     const type = this.getAttribute("type");
-    const inp = createInputByType(type);
+    const inp = createInputByType(type, this.childopts);
     this.inps.appendChild(inp);
     return inp;
   }
