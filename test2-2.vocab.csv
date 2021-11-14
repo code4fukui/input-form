@@ -1,0 +1,4 @@
+name_ja,mandatory,type,description,url,lock,limit,count,uploadurl,disabled
+子1,0,string,,,,100,,
+子2,,int,,,,1000,,,true
+子3,,int,,,,1000,,

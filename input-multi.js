@@ -36,7 +36,7 @@ class InputMulti extends HTMLElement {
     };
     this._setValue();
   }
-  async _addInp() {
+  _addInp() {
     const type = this.getAttribute("type");
     const inp = createInputByType(type, this.childopts);
     this.inps.appendChild(inp);
@@ -45,23 +45,26 @@ class InputMulti extends HTMLElement {
   async _setValue() {
     this.inps.innerHTML = "";
     const data = JSON.parse(this.getAttribute("data"));
+    //console.log("_sv", data);
     if (data && data.length > 0) {
       for (const d of data) {
         const inp = this._addInp();
-        inp.value = data[i];
+        inp.value = d;
       }
     }
   }
   get value() {
-    const inps = this.children;
+    const inps = this.inps.children;
     const res = [];
-    for (let i = 0; i < inps.length - 1; i++) {
-      const inp = inps[i];
+    for (const inp of inps) {
       res.push(inp.value);
     }
     return res;
   }
   set value(data) {
+    if (data && typeof data == "string") {
+      data = JSON.parse(data);
+    }
     if (data && Array.isArray(data)) {
       const data2 = [];
       const len = Math.min(data.length, parseInt(this.getAttribute("maxlength")));

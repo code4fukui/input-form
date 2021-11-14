@@ -1,0 +1,3 @@
+name_ja,mandatory,type,description,url,lock,limit,count,uploadurl
+法人名,0,string,,,,100,,
+店舗・事業所情報,,vocab[test2-2.vocab.csv],,,,1000,20,

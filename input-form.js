@@ -22,10 +22,12 @@ class InputForm extends HTMLElement {
       return;
     }
     const vocab = CSV.toJSON(await CSV.fetch(vocaburl));
-    const data = this.getAttribute("data");
-
+    const data = JSON.parse(this.getAttribute("value"));
     const inps = {};
     for (const v of vocab) {
+      if (v.disabled) {
+        continue;
+      }
       const name = v.name_ja;
       const div = create("div", this);
       /*
@@ -38,10 +40,12 @@ class InputForm extends HTMLElement {
 
       div.innerHTML = name + mandatory; //.substring(5);
       const type = v.type;
-      const val = data ? data[name] || "" : "";
       const inp = v.count > 1 ? new InputMulti({ type, maxlength: v.count }, v) : createInputByType(type, v);
       this.appendChild(inp);
-      inp.value = val;
+      const val = data ? data[name] || "" : "";
+      if (val) {
+        inp.value = val;
+      }
       if (v.lock == "1") {
         inp.disabled = true;
       }
@@ -58,12 +62,18 @@ class InputForm extends HTMLElement {
     return res;
   }
   set value(data) {
-    for (const name in this.inps) {
-      const inp = this.inps[name];
-      if (data[name] !== undefined) {
-        inp.value = data[name];
+    if (data && typeof data == "string") {
+      data = JSON.parse(data);
+    }
+    if (this.inps) {
+      for (const name in this.inps) {
+        const inp = this.inps[name];
+        if (data[name] !== undefined) {
+          inp.value = data[name];
+        }
       }
     }
+    this.setAttribute("value", JSON.stringify(data));
   }
 }
 
