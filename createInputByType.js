@@ -3,6 +3,7 @@ import { InputLGCode } from "https://code4fukui.github.io/input-lgcode/input-lgc
 import { InputGeo3x3 } from "https://code4fukui.github.io/input-geo3x3/input-geo3x3.js";
 import { InputForm } from "./input-form.js";
 import { InputImage } from "https://code4fukui.github.io/input-image/input-image.js";
+import { SelectIndustryCode } from "https://code4fukui.github.io/IndustryCode/select-industrycode.js";
 
 export const createInputByType = (type, opts) => {
   if (type.startsWith("enum[")) {
@@ -33,8 +34,8 @@ export const createInputByType = (type, opts) => {
     return create("textarea", this);
   } else if (type == "lgcode") {
     return new InputLGCode(opts);
-  } else if (type == "industorycode") {
-    return new InputIndustoryCode(opts);
+  } else if (type == "industrycode") {
+    return new SelectIndustryCode(opts);
   } else if (type == "geo3x3") {
     return new InputGeo3x3(34.57346388686853, 135.48292948058597); // todo ues opts
   } else if (type == "image") {
