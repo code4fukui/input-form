@@ -110,6 +110,15 @@ Deno.test("industrycode", () => {
   t.assertEquals(VV.validate({ type: "industrycode" }, "1123"), { value: "1123" });
   t.assertEquals(VV.validate({ type: "industrycode" }, "ポイ1234"), { value: "1234", other: "ポイ1234" });
 });
+Deno.test("lgcode", () => {
+  t.assertEquals(VV.validate({ type: "lgcode" }, "123456"), { value: "123456" });
+  t.assertEquals(VV.validate({ type: "lgcode" }, "ポイ１２３４５６"), { value: "123456", other: "ポイ１２３４５６" });
+});
+Deno.test("week", () => {
+  t.assertEquals(VV.validate({ type: "week" }, "月火水木金土日"), { value: "月火水木金土日" });
+  t.assertEquals(VV.validate({ type: "week" }, "月/火/水/木/金/土/日"), { value: "月火水木金土日", other: "月/火/水/木/金/土/日" });
+  t.assertEquals(VV.validate({ type: "week" }, ""), { value: "" });
+});
 Deno.test("string[pref]", () => {
   t.assertEquals(VV.validate({ type: "string[pref]" }, "北海道"), { value: "北海道" });
 });

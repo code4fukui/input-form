@@ -97,6 +97,8 @@ class VocabularyValidator {
         return this.validatePOICode(vocab, value);
       case "industrycode":
         return this.validateIndustryCode(vocab, value);
+      case "lgcode":
+        return this.validateLGCode(vocab, value);
       case "lang":
         return this.validateLangCode(vocab, value);
       case "week":
@@ -106,6 +108,8 @@ class VocabularyValidator {
       return this.validateString(vocab, value, { singleline: true });
     } else if (vocab.type.startsWith("enum[")) {
       return this.validateEnum(vocab, value);
+    } else if (vocab.type.startsWith("flg[")) {
+      return this.validateFlag(vocab, value);
     }
     throw new Error("validator didn't support yet! " + vocab.type)
   }
@@ -368,6 +372,17 @@ class VocabularyValidator {
       return { value: "" };
     }
     const sels = vocab.type.substring("enum[".length, vocab.type.length - 1).split(",");
+    const n = sels.indexOf(value);
+    if (n == -1) {
+      return { value: "", other: value };
+    }
+    return { value };
+  }
+  static validateFlag(vocab, value) {
+    if (!value) {
+      return { value: "" };
+    }
+    const sels = vocab.type.substring("flg[".length, vocab.type.length - 1).split(",");
     const n = sels.indexOf(value);
     if (n == -1) {
       return { value: "", other: value };
