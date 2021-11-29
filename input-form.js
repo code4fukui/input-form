@@ -22,6 +22,7 @@ class InputForm extends HTMLElement {
       return;
     }
     const vocab = CSV.toJSON(await CSV.fetch(vocaburl));
+    this.vocab = vocab;
     const data = JSON.parse(this.getAttribute("value"));
     const inps = {};
     for (const v of vocab) {
