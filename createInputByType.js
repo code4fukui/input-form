@@ -9,10 +9,19 @@ export const createInputByType = (type, opts) => {
   if (type.startsWith("enum[")) {
     const vals = type.substring(5, type.length - 1).split(",");
     const sel = create("select", this);
-    //const vals = JSON.parse(val);
     for (const d of vals) {
       const opt = create("option", sel);
       opt.textContent = d;
+    }
+    return sel;
+  } else if (type.startsWith("enumv[")) {
+    const vals = type.substring(6, type.length - 1).split(",");
+    const sel = create("select", this);
+    for (const d of vals) {
+      const opt = create("option", sel);
+      const n = d.lastIndexOf(":");
+      opt.textContent = d.substring(0, n);
+      opt.value = d.substring(n + 1);
     }
     return sel;
   } else if (type.startsWith("vocab[")) {

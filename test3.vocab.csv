@@ -1,0 +1,3 @@
+name_ja,mandatory,type,description,url,lock,limit,count,uploadurl
+名前,0,string,,,,100,,
+種類,,"enumv[あいう:1,かきく:2]",,,,,,
